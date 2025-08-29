@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFHL API Output</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>BFHL API Output</h1>
+
+    <button id="fetchBtn">Fetch API Data</button>
+
+    <div id="output" class="output-box">
+      <p>Click the button to fetch data...</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("fetchBtn").addEventListener("click", async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/bfhl", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            data: [1, 2, 6, "a", "B", "z", "@"]
+          })
+        });
+
+        const result = await response.json();
+
+        document.getElementById("output").innerHTML = `
+          <h2>Response:</h2>
+          <pre>${JSON.stringify(result, null, 2)}</pre>
+        `;
+      } catch (error) {
+        document.getElementById("output").innerHTML = `<p style="color:red;">Error: ${error}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
